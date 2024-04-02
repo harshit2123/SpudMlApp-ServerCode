@@ -20,7 +20,16 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-MODEL = tf.keras.models.load_model("./1")
+# Load the TensorFlow SavedModel as an inference-only layer
+inference_layer = tf.keras.layers.TFSMLayer("../saved-models/1", call_endpoint="serving_default")
+
+# Create a Keras model with the inference-only layer
+inputs = tf.keras.Input(shape=(256, 256, 3))  # Define your input shape
+outputs = inference_layer(inputs)
+model = tf.keras.Model(inputs, outputs)
+
+# Compile the model (necessary even for inference)
+model.compile()
 
 CLASS_NAMES = ["Early Blight", "Late Blight", "Healthy"]
 
