@@ -21,7 +21,7 @@ app.add_middleware(
 )
 
 # Load the TensorFlow SavedModel as an inference-only layer
-inference_layer = tf.keras.layers.TFSMLayer("../saved-models/1", call_endpoint="serving_default")
+inference_layer = tf.keras.layers.TFSMLayer("./1", call_endpoint="serving_default")
 
 # Create a Keras model with the inference-only layer
 inputs = tf.keras.Input(shape=(256, 256, 3))  # Define your input shape
